@@ -36,7 +36,7 @@ func (query_ptr *Query) Select(columns []string) *Query {
 		}
 	}
 	if params == "" {
-		params = "* "
+		params = "*"
 	}
 	query_ptr.body = fmt.Sprintf(`%s %s FROM %s`, verb, params, query_ptr.tableName)
 	return query_ptr
@@ -51,7 +51,7 @@ func (query_ptr *Query) GetQuery() (query string) {
 	return
 }
 
-func toStr(val interface{}) string {
+func ToStr(val interface{}) string {
 	switch val := val.(type) {
 	case int:
 		return fmt.Sprintf(`%d`, val)
