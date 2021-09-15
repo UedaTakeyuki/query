@@ -2,15 +2,13 @@ package query
 
 import (
 	"testing"
-
-	"github.com/UedaTakeyuki/query"
 )
 
-var q query.Query
+var q Query
 
 func Test_01(t *testing.T) {
 	q.SetTableName("tests").Select([]string{})
-	if qs := q.GetGetQuery; qs != "" {
-		t.Error("query: %s\n", qs)
+	if qs := q.GetQuery(); qs != "" {
+		t.Errorf("query: %s\n", qs)
 	}
 }
