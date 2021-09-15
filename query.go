@@ -17,6 +17,7 @@ type Verb int
 
 const (
 	Select Verb = iota
+	ReplaceInto
 )
 
 func (query_ptr *Query) SetTableName(tableName string) *Query {
@@ -28,6 +29,8 @@ func (query_ptr *Query) QueryString() (query string) {
 	switch query_ptr.verb {
 	case Select:
 		return query_ptr.QueryStringSelect()
+	case ReplaceInto:
+		return query_ptr.QueryStringReplaceInto()
 	default:
 		query_ptr.err_str += "invalidate verb; "
 		return ""
