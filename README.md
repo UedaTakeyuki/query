@@ -23,18 +23,25 @@ querybuilder.SetTableName("tests")
 var name string
 var price int
 
-columns := []string{"name", "price"}      // column names for select phrase
-results := []interface{}{&name, &price} // address of valiables to get value
+columns := []string{"name", "price"}                                           // column names for select phrase
+results := []interface{}{&name, &price}                                        // address of valiables to get value
 
 // SELECT name, price FROM tests WHERE ID = 1;
 query = querybuilder.Select(columns).Where(qb.Equal("ID", 1)).QueryString() 
-db.SQLiteHandle.QueryRow(query, results...); // The values from the query are set to the variable name and price
+db.SQLiteHandle.QueryRow(query, results...);                                   // set values to name and price
 
 /**************************************
 * update
 ***************************************/
-// Json Function can be handled
-json_func := qb.JsonFunction{Body: fmt.Sprintf(`json_insert(attr, "$.%s", "%s", "$.%s", "%s")`, "kero", "kerokero", "keroyon", "bahahai")}
+json_func := qb.JsonFunction{                                                  // Json Functions is supported
+               Body:
+               fmt.Sprintf(`json_insert(attr, "$.%s", "%s", "$.%s", "%s")`,    // In created SQL string, this json function string is treated as special
+			   "kero",                                             // Fx: don't be quoted, even ordinaly string shoud be quoted.
+			   "kerokero",
+			   "keroyon",
+			   "bahahai")
+}
+			     
 // name & value pair for update
 params = []qb.Param{
 	{Name: "name", Value: "frog"},
