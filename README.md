@@ -4,8 +4,8 @@ simple go query builder with just minimum features for me. Pull / Feature reques
 ## How to use
 ```
 import (
-	"fmt"
-	qb "github.com/UedaTakeyuki/query"
+  "fmt"
+  qb "github.com/UedaTakeyuki/query"
 )
 
 // query builder
