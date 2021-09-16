@@ -15,9 +15,17 @@ type Query struct {
 
 type Verb int
 
+// json() function string should be separated from ordinaly string
+// because it shouldn't quoted in the SQL string.
+// This difference is appear in the ToLiteralValue() function.
+type JsonFunction struct {
+	Body string
+}
+
 const (
 	Select Verb = iota
 	ReplaceInto
+	Update
 )
 
 func (query_ptr *Query) SetTableName(tableName string) *Query {
@@ -31,6 +39,8 @@ func (query_ptr *Query) QueryString() (query string) {
 		return query_ptr.QueryStringSelect()
 	case ReplaceInto:
 		return query_ptr.QueryStringReplaceInto()
+	case Update:
+		return query_ptr.QueryStringUpdate()
 	default:
 		query_ptr.err_str += "invalidate verb; "
 		return ""
@@ -50,6 +60,8 @@ func ToLiteralValue(val interface{}) string {
 		return fmt.Sprintf(`%d`, val)
 	case string:
 		return fmt.Sprintf(`"%s"`, val)
+	case JsonFunction:
+		return fmt.Sprintf(`%s`, val.Body)
 	}
 	return ""
 }
