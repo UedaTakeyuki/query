@@ -29,4 +29,9 @@ func Test_01(t *testing.T) {
 		t.Errorf("literal: %s\n", literal)
 	}
 
+	// Drop Table tests;
+	if qs = q.DropTable().QueryString(); qs != `DROP TABLE tests;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
 }

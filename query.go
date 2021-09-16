@@ -26,6 +26,7 @@ const (
 	Select Verb = iota
 	ReplaceInto
 	Update
+	DropTable
 )
 
 func (query_ptr *Query) SetTableName(tableName string) *Query {
@@ -41,6 +42,8 @@ func (query_ptr *Query) QueryString() (query string) {
 		return query_ptr.QueryStringReplaceInto()
 	case Update:
 		return query_ptr.QueryStringUpdate()
+	case DropTable:
+		return query_ptr.QueryStringDropTable()
 	default:
 		query_ptr.err_str += "invalidate verb; "
 		return ""
