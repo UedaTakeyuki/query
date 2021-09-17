@@ -66,6 +66,25 @@ db.SQLiteHandle.Exec(query)
 ### JSON Function support
 The **JsonFunction** type is provided to avoid making wrong SQL phrase by which json functions are missused as ordinaly string or other expr.
 
+```
+json_func := qb.JsonFunction{                                                  // Json Functions is supported
+               Body:
+               fmt.Sprintf(`json_insert(attr, "$.%s", "%s", "$.%s", "%s")`,    // In created SQL string, this json function string is treated as special
+			   "kero",                                             // Fx: don't be quoted, even ordinaly string shoud be quoted.
+			   "kerokero",
+			   "keroyon",
+			   "bahahai")
+}
+			     
+// name & value pair for update
+params = []qb.Param{
+	{Name: "name", Value: "frog"},
+	{Name: "attr", Value: json_func},
+}
+// UPDATE tests SET name="frog", attr=json_insert(attr, "$.kero", "kerokero", "$.keroyon", "bahahai") WHERE ID = 1;
+query = querybuilder.Update(params).Where(qb.Equal("ID", 1)).QueryString()
+```
+
 ### Expediently feature support
 Basically, supported features are selected to meet my necesity for my projects :-)  
 Although, feature request are welcome!
