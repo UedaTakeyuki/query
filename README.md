@@ -1,5 +1,5 @@
 # query
-simple go query builder with just minimum features for me. Pull / Feature requests are welcome as your preferences!
+simple go query builder with **Json Function** support. Pull / Feature requests are welcome as your preferences!
 
 ## How to use
 ```
@@ -63,11 +63,21 @@ db.SQLiteHandle.Exec(query)
 ```
 
 ## Features
+### JSON Function support
+The **JsonFunction** type is provided to avoid making wrong SQL phrase by which json functions are missused as ordinaly string or other expr.
+
+### Expediently feature support
+Basically, supported features are selected to meet my necesity for my projects :-)  
+Although, feature request are welcome!
+
+
+## Status
 ### SQL features
 - [x] select
 - [x] where
 - [x] replace into
 - [x] update
+- [x] drop database
 
 ### SQL extensions
 - [x] Json Function Handling
