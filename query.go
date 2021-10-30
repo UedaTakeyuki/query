@@ -25,6 +25,7 @@ type JsonFunction struct {
 const (
 	Select Verb = iota
 	ReplaceInto
+	InsertInto
 	Update
 	DropTable
 )
@@ -40,6 +41,8 @@ func (query_ptr *Query) QueryString() (query string) {
 		return query_ptr.QueryStringSelect()
 	case ReplaceInto:
 		return query_ptr.QueryStringReplaceInto()
+	case InsertInto:
+		return query_ptr.QueryStringInsertInto()
 	case Update:
 		return query_ptr.QueryStringUpdate()
 	case DropTable:
