@@ -4,18 +4,18 @@ import (
 	"fmt"
 )
 
-func (query_ptr *Query) ReplaceInto(params []Param) *Query {
+func (query_ptr *Query) InsertInto(params []Param) *Query {
 
-	// set verb as "ReplaceInto"
-	query_ptr.verb = ReplaceInto
+	// set verb as "InsertInto"
+	query_ptr.verb = InsertInto
 
 	// make body
-	verb := "REPLACE INTO"
+	verb := "INSERT INTO"
 
 	return query_ptr.InsertReplaceCore(verb, params)
 }
 
-func (query_ptr *Query) QueryStringReplaceInto() (query string) {
+func (query_ptr *Query) QueryStringInsertInto() (query string) {
 	query = fmt.Sprintf(`%s`, query_ptr.body)
 	/*	if query_ptr.where != "" {
 		query += fmt.Sprintf(` %s`, query_ptr.where)

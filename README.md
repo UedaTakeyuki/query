@@ -95,6 +95,7 @@ Although, feature request are welcome!
 - [x] select
 - [x] where
 - [x] replace into
+- [x] insert into
 - [x] update
 - [x] drop database
 
