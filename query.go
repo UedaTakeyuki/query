@@ -65,7 +65,7 @@ func ToLiteralValue(val interface{}) string {
 	case int:
 		return fmt.Sprintf(`%d`, val)
 	case string:
-		return fmt.Sprintf(`"%s"`, val)
+		return fmt.Sprintf(`'%s'`, val)
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, val.Body)
 	}
