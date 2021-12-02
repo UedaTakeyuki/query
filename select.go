@@ -20,9 +20,9 @@ func (query_ptr *Query) Select(columns []interface{}) *Query {
 	for _, column := range columns {
 		if column != "" {
 			if params == "" {
-				params += ToLiteralValue(column)
+				params += fmt.Sprintf(`%s`, column)
 			} else {
-				params += fmt.Sprintf(` ,%s`, ToLiteralValue(column))
+				params += fmt.Sprintf(` ,%s`, column)
 			}
 		}
 	}
