@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func (query_ptr *Query) Select(columns []string) *Query {
+func (query_ptr *Query) Select(columns []interface{}) *Query {
 	// confirm tableName is not ""
 	if query_ptr.tableName == "" {
 		query_ptr.err_str += "Need to set tableName before setting verb; "
@@ -20,9 +20,9 @@ func (query_ptr *Query) Select(columns []string) *Query {
 	for _, column := range columns {
 		if column != "" {
 			if params == "" {
-				params += fmt.Sprintf(`%s`, column)
+				params += ToLiteralValue(column)
 			} else {
-				params += fmt.Sprintf(` ,%s`, column)
+				params += fmt.Sprintf(` ,%s`, ToLiteralValue(column))
 			}
 		}
 	}

@@ -2,3 +2,5 @@
 2021.09.16 add Update
 
 2021.10.30 add InsertInto
+
+2021.12.02 support JsonFunction for column
