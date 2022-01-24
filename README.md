@@ -60,6 +60,13 @@ params := []qb.Param{{Name: "ID",    Value: 1},
 		                 {Name: "attr",  Value: "{}"}}
 query = querybuilder.ReplaceInto(params).QueryString()
 db.SQLiteHandle.Exec(query)
+
+/**************************************
+* delete
+***************************************/
+// DELETE FROM tests WHERE ID = 'kero';
+query = querybuilder.Delete().Where(query.Equal("ID", "kero")).QueryString()
+db.SQLiteHandle.Exec(query)
 ```
 
 ## Features
@@ -98,6 +105,7 @@ Although, feature request are welcome!
 - [x] insert into
 - [x] update
 - [x] drop database
+- [x] delete
 
 ### SQL extensions
 - [x] Json Function Handling

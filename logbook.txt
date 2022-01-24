@@ -6,3 +6,4 @@
 2021.12.02 support JsonFunction for column
 
 2022.01.19 add int64 to ToLiteralValue
+2022.01.24 add delete

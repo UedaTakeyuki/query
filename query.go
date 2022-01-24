@@ -28,6 +28,7 @@ const (
 	InsertInto
 	Update
 	DropTable
+	Delete
 )
 
 func (query_ptr *Query) SetTableName(tableName string) *Query {
@@ -47,6 +48,8 @@ func (query_ptr *Query) QueryString() (query string) {
 		return query_ptr.QueryStringUpdate()
 	case DropTable:
 		return query_ptr.QueryStringDropTable()
+	case Delete:
+		return query_ptr.QueryStringDelete()
 	default:
 		query_ptr.err_str += "invalidate verb; "
 		return ""
