@@ -66,12 +66,16 @@ func (query_ptr *Query) QueryString() (query string) {
 func ToLiteralValue(val interface{}) string {
 	switch v := val.(type) {
 	case int:
+		fmt.Printf(`type: %T`, v)
 		return fmt.Sprintf(`%d`, v)
 	case int64:
+		fmt.Printf(`type: %T`, v)
 		return fmt.Sprintf(`%d`, v)
 	case string:
+		fmt.Printf(`type: %T`, v)
 		return fmt.Sprintf(`'%s'`, v)
 	case JsonFunction:
+		fmt.Printf(`type: %T`, v)
 		return fmt.Sprintf(`%s`, v.Body)
 	default:
 		fmt.Printf(`type: %T`, v)
