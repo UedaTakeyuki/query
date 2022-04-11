@@ -2,7 +2,6 @@ package query
 
 import (
 	"fmt"
-	"log"
 )
 
 type Query struct {
@@ -75,7 +74,7 @@ func ToLiteralValue(val interface{}) string {
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, v.Body)
 	default:
-		log.Println(`type: %T`, v)
+		fmt.Printf(`type: %T`, v)
 	}
 	return ""
 }
