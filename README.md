@@ -33,6 +33,9 @@ db.SQLiteHandle.QueryRow(query, results...);                                   /
 /**************************************
 * update
 ***************************************/
+//
+// Update ordinary column as "name" and Json columng as "attr" by Params struct with 2 elements for "name" and "attr"
+//
 json_func := qb.JsonFunction{                                                  // Json Functions is supported
                Body:
                fmt.Sprintf(`json_insert(attr, "$.%s", "%s", "$.%s", "%s")`,    // In created SQL string, this json function string is treated as special
@@ -50,6 +53,29 @@ params = []qb.Param{
 // UPDATE tests SET name="frog", attr=json_insert(attr, "$.kero", "kerokero", "$.keroyon", "bahahai") WHERE ID = 1;
 query = querybuilder.Update(params).Where(qb.Equal("ID", 1)).QueryString()
 db.SQLiteHandle.Exec(query);
+
+//
+// Update Json object value by new json value
+//
+
+jsonStr := '{"d":{"e":100,"f":"ケロケロ"}}'
+
+json_func := query.JsonFunction{
+	// STR2JSON_FUNC is abstruct keyword, be adjusted to each DBMS automaticallhy
+	//   fx: "json" for sqlite 
+	//       The json(x) function verifies that its argument X is a valid JSON string and returns a minified version of that JSON string.
+	//       "json_compact" for mariadb
+	//       The json_compact() function Removes all unnecessary spaces so the json document is as short as possible.
+	
+	Body: fmt.Sprintf(`json_set(Attr, "$.runtime_settings", STR2JSON_FUNC('%s'))`, jsonStr)
+}
+
+params := []query.Param{
+	{Name: "Attr", Value: json_func},
+}
+
+// UPDATE device SET Attr=json_set(Attr, "$.runtime_settings", STR2JSON_FUNC('{"d":{"e":100,"f":"ケロケロ"}}')) WHERE ID = 'vogQLP';
+query = querybuilder.Update(params).Where(query.Equal("ID", 'vogQLP')).QueryString()
 
 /**************************************
 * replace into
