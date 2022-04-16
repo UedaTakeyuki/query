@@ -58,8 +58,9 @@ db.SQLiteHandle.Exec(query);
 // Update Json object value by new json value
 //
 
-jsonStr := '{"d":{"e":100,"f":"ケロケロ"}}'
+newJsonStr := '{"d":{"e":100,"f":"ケロケロ"}}'
 
+// for json_set() function
 json_func := query.JsonFunction{
 	// STR2JSON_FUNC is abstruct keyword, be adjusted to each DBMS automaticallhy
 	//   fx: "json" for sqlite 
@@ -67,9 +68,10 @@ json_func := query.JsonFunction{
 	//       "json_compact" for mariadb
 	//       The json_compact() function Removes all unnecessary spaces so the json document is as short as possible.
 	
-	Body: fmt.Sprintf(`json_set(Attr, "$.runtime_settings", STR2JSON_FUNC('%s'))`, jsonStr)
+	Body: fmt.Sprintf(`json_set(Attr, "$.runtime_settings", STR2JSON_FUNC('%s'))`, newJsonStr)
 }
 
+// just for `Attr=json_set()`
 params := []query.Param{
 	{Name: "Attr", Value: json_func},
 }
