@@ -7,3 +7,5 @@
 
 2022.01.19 add int64 to ToLiteralValue
 2022.01.24 add delete
+
+2022.04.17 add float64 o ToLiteralValue

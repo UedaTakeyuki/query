@@ -71,10 +71,14 @@ func ToLiteralValue(val interface{}) string {
 		return fmt.Sprintf(`%d`, v)
 	case int64:
 		return fmt.Sprintf(`%d`, v)
+	case float64:
+		return fmt.Sprintf(`%v`, v)
 	case string:
 		return fmt.Sprintf(`'%s'`, v)
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, v.Body)
+	default:
+		return fmt.Sprintf(`%v`, v)
 	}
 	log.Println("type of val:", reflect.TypeOf(val))
 	return ""
