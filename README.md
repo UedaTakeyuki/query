@@ -120,6 +120,53 @@ params = []qb.Param{
 query = querybuilder.Update(params).Where(qb.Equal("ID", 1)).QueryString()
 ```
 
+### ToLiteralValue: Quote a literal value appropriately
+The function [ToLiteralValue](https://github.com/UedaTakeyuki/query/blob/main/query.go#L68) quotes a literalvalue in accordance with their type.
+
+```
+import (
+	qb "github.com/UedaTakeyuki/query"
+)
+
+func (data *V1Data) dbUpdate(id interface{}, jsonPath string, value interface{}) (queryStr string) {
+
+	valueStrQuotedApropriately := qb.ToLiteralValue(value)
+
+	json_func := qb.JsonFunction{
+		Body: fmt.Sprintf(`json_set(Attr, "%s", %s)`,
+			jsonPath,
+			valueStrQuotedApropriately),
+	}
+
+	params := []qb.Param{
+		{Name: "Attr", Value: json_func},
+	}
+
+	queryStr = queryBuilder.SetTableName("product").Update(params).Where(query.Equal("ID", id)).QueryString()
+	return
+}
+
+func showQueries(detail map[string]interface{}){
+	name := "cake"
+	price := 1.5
+	
+	log.Println(dbUpdate(1, "$.name", "cake")) // Update a Json column "Attr.name" by string "cake"
+	log.Println(dbUpdate(1, "$.price", 1.5))   // Update a Json column "Attr.name" by string "cake"
+	
+	jsonStr, err := json.Marshal(detail)
+	
+	// wrap json_func struct for indicate it as "json funcsiont" explicitly
+	json_func := qb.JsonFunction{
+		// STR2JSON_FUNC is abstruct keyword, be adjusted to each DBMS automaticallhy
+		// fx: "json" for sqlite, "json_compact" for mariadb
+		Body: fmt.Sprintf(`STR2JSON_FUNC('%s')`, jsonStr),
+	}
+	
+	log.Println(dbUpdate(1. "$.detail", json_func)) // Update a Json column "Attr.name" by a json data created from jsonStr.
+	
+}
+```
+
 ### Expediently feature support
 Basically, supported features are selected to meet my necesity for my projects :-)  
 Although, feature request are welcome!
