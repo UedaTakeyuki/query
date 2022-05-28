@@ -1,6 +1,7 @@
 package query
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"reflect"
@@ -77,6 +78,13 @@ func ToLiteralValue(val interface{}) string {
 		return fmt.Sprintf(`'%s'`, v)
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, v.Body)
+	case map[string]interface{}, []map[string]interface{}:
+		attr, err := json.Marshal(v)
+		if err != nil {
+			log.Println(err)
+			attr = []byte{}
+		}
+		return fmt.Sprintf(`STR2JSON_FUNC('%s')`, string(attr))
 	default:
 		return fmt.Sprintf(`%v`, v)
 	}

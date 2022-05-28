@@ -1,6 +1,8 @@
 package query
 
 import (
+	"fmt"
+	"log"
 	"testing"
 
 	"github.com/UedaTakeyuki/query"
@@ -9,7 +11,8 @@ import (
 var q query.Query
 
 func Test_01(t *testing.T) {
-	var qs string
+	var qs, qs1, qs2 string
+
 	// SELECT *  FROM tests;
 	s := make([]interface{}, 0)
 	q.SetTableName("tests").Select(s)
@@ -41,5 +44,42 @@ func Test_01(t *testing.T) {
 	if qs = q.SetTableName("tests").Delete().Where(query.Equal("ID", "kero")).QueryString(); qs != `DELETE FROM tests WHERE ID = 'kero';` {
 		t.Errorf("query: %s\n", qs)
 	}
+
+	json_func := query.JsonFunction{ // Json Functions is supported
+		Body: fmt.Sprintf(
+			`json_insert(attr, "$.%s", "%s", "$.%s", "%s")`, // In created SQL string, this json function string is treated as special
+			"kero", // Fx: don't be quoted, even ordinaly string shoud be quoted.
+			"kerokero",
+			"keroyon",
+			"bahahai",
+		),
+	}
+
+	// name & value pair for update
+	params := []query.Param{
+		{Name: "name", Value: "frog"},
+		{Name: "attr", Value: json_func},
+	}
+
+	// UPDATE without param
+	if qs = q.Update(nil).Where(query.Equal("ID", 1)).QueryString(); qs != "UPDATE tests WHERE ID = 1;" {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// UPDATE with param and SET after
+	qs1 = q.Update(params).Where(query.Equal("ID", 1)).QueryString()
+	qs2 = q.Update(nil).Set(params).Where(query.Equal("ID", 1)).QueryString()
+	if qs1 != qs2 {
+		t.Errorf("query1: %s\nquery2: %s\n", qs1, qs2)
+	}
+	log.Println(q.Update(params).Where(query.Equal("ID", 1)).QueryString())
+	log.Println(q.Update(nil).Where(query.Equal("ID", 1)).QueryString())
+	log.Println(q.Update(nil).Set(params).Where(query.Equal("ID", 1)).QueryString())
+
+	// name & value pair for update
+	params1 := []query.Param{
+		{Name: "attr", Value: []map[string]interface{}{{"kerokero": 1}, {"kerokero": 2}}},
+	}
+	log.Println(q.Update(nil).Set(params1).Where(query.Equal("ID", 1)).QueryString())
 
 }
