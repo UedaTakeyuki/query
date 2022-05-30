@@ -77,10 +77,10 @@ func (query_ptr *Query) SetJson_Set(path string, jsonParams []JsonPathAndValue) 
 	set_body := ""
 
 	// make body
-	set_body += fmt.Sprintf(`%s=%s`, jsonParams[0].Path, ToLiteralValue(jsonParams[0].Value))
+	set_body += fmt.Sprintf(`"%s",%s`, jsonParams[0].Path, ToLiteralValue(jsonParams[0].Value))
 
 	for _, v := range jsonParams[1:] {
-		set_body += fmt.Sprintf(`,"%s"=%s`, v.Path, ToLiteralValue(v.Value))
+		set_body += fmt.Sprintf(`,"%s",%s`, v.Path, ToLiteralValue(v.Value))
 	}
 
 	query_ptr.body = query_ptr.body + fmt.Sprintf(` SET %s=json_set(%s,%s)`, path, path, set_body)
