@@ -12,3 +12,4 @@
 
 2022.05.28 add Set
            Parts of Json automaticall wrap with STR2JSON_FUNC
+2022.05.30 SetJson completed

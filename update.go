@@ -68,8 +68,8 @@ func (query_ptr *Query) Set(params []Param) *Query {
 	return query_ptr
 }
 
-type JsonPathAndValue Pair struct {
-	Path  string      // expression of Json Path
+type JsonPathAndValue struct {
+	Path  string // expression of Json Path
 	Value interface{}
 }
 
@@ -77,10 +77,12 @@ func (query_ptr *Query) SetJson_Set(path string, jsonParams []JsonPathAndValue) 
 	set_body := ""
 
 	// make body
-	if set_body == "" {
-		set_body += fmt.Sprintf(`%s=%s`, jsonParams.Path, ToLiteralValue(jsonParams.Value))
-	} else {
-		set_body += fmt.Sprintf(`,%s=%s`, jsonParams.Path, ToLiteralValue(jsonParams.Value))
+	set_body += fmt.Sprintf(`%s=%s`, jsonParams[0].Path, ToLiteralValue(jsonParams[0].Value))
+
+	for _, v := range jsonParams[1:] {
+		set_body += fmt.Sprintf(`,"%s"=%s`, v.Path, ToLiteralValue(v.Value))
 	}
 
+	query_ptr.body = query_ptr.body + fmt.Sprintf(` SET %s=json_set(%s,%s)`, path, path, set_body)
+	return query_ptr
 }

@@ -82,4 +82,11 @@ func Test_01(t *testing.T) {
 	}
 	log.Println(q.Update(nil).Set(params1).Where(query.Equal("ID", 1)).QueryString())
 
+	jsonParams := []query.JsonPathAndValue{
+		{Path: "$.user", Value: map[string]interface{}{"name": "taro", "age": 10}},
+		{Path: "$.point", Value: 11},
+		{Path: "$.type", Value: "discount"},
+		{Path: "$.expired", Value: true},
+	}
+	log.Println(q.Update(nil).SetJson_Set("attr", jsonParams).Where(query.Equal("ID", 1)).QueryString())
 }
