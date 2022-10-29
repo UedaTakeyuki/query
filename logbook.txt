@@ -13,3 +13,5 @@
 2022.05.28 add Set
            Parts of Json automaticall wrap with STR2JSON_FUNC
 2022.05.30 SetJson completed
+
+2022.10.29 fix the type of column for Select from []interface{} to []string

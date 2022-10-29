@@ -14,7 +14,8 @@ func Test_01(t *testing.T) {
 	var qs, qs1, qs2 string
 
 	// SELECT *  FROM tests;
-	s := make([]interface{}, 0)
+	//	s := make([]interface{}, 0)
+	s := []string{}
 	q.SetTableName("tests").Select(s)
 	if qs = q.QueryString(); qs != `SELECT * FROM tests;` {
 		t.Errorf("query: %s\n", qs)

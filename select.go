@@ -4,7 +4,8 @@ import (
 	"fmt"
 )
 
-func (query_ptr *Query) Select(columns []interface{}) *Query {
+//func (query_ptr *Query) Select(columns []interface{}) *Query {
+func (query_ptr *Query) Select(columns []string) *Query {
 	// confirm tableName is not ""
 	if query_ptr.tableName == "" {
 		query_ptr.err_str += "Need to set tableName before setting verb; "
