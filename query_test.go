@@ -26,6 +26,46 @@ func Test_01(t *testing.T) {
 		t.Errorf("query: %s\n", qs)
 	}
 
+	// SELECT * From tests WHERE ID != 1
+	if qs = q.Where(query.NotEqual("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID != 1;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE ID > 1
+	if qs = q.Where(query.GreaterThan("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID > 1;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE ID >= 1
+	if qs = q.Where(query.GreaterEqual("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID >= 1;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE ID < 1
+	if qs = q.Where(query.LessThan("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID < 1;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE ID <= 1
+	if qs = q.Where(query.LessEqual("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID <= 1;` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE NOT (ID = 1)
+	if qs = q.Where(query.Not(query.Equal("ID", 1))).QueryString(); qs != `SELECT * FROM tests WHERE (NOT ID = 1);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE (ID = 1 AND ID = 2)
+	if qs = q.Where(query.And(query.Equal("ID", 1), query.Equal("ID", 2))).QueryString(); qs != `SELECT * FROM tests WHERE (ID = 1 AND ID = 2);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE (ID = 1 OR ID = 2)
+	if qs = q.Where(query.Or(query.Equal("ID", 1), query.Equal("ID", 2))).QueryString(); qs != `SELECT * FROM tests WHERE (ID = 1 OR ID = 2);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
 	// ToLiteralValue(1)
 	if literal := query.ToLiteralValue(1); literal != `1` {
 		t.Errorf("literal: %s\n", literal)
