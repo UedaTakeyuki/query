@@ -55,3 +55,19 @@ func Or(lhs string, rhs string) string {
 func Not(rhs string) string {
 	return fmt.Sprintf(`(NOT %s)`, rhs)
 }
+
+// WHERE (age BETWEEN 40 AND 55);
+func Between(name string, val1 interface{}, val2 interface{}) string {
+	return fmt.Sprintf(`(%s BETWEEN %s AND %s)`, name, ToLiteralValue(val1), ToLiteralValue(val2))
+}
+
+// WHERE (age IN(28, 38, 48));
+func In(name string, vals []interface{}) string {
+	res := fmt.Sprintf(`(%s IN(`, name)
+	for _, val := range vals {
+		res = res + fmt.Sprintf(`%s,`, ToLiteralValue(val))
+	}
+	res = res[0 : len(res)-1]
+	res = res + "))"
+	return res
+}

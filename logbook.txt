@@ -17,3 +17,4 @@
 2022.10.29 fix the type of column for Select from []interface{} to []string
 
 2022.12.7 add NotEqual, GreaterThan, GreaterEqual, LessThan, LessEqual, And, Or, Not
+          add Between, In

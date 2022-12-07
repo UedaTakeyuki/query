@@ -66,6 +66,16 @@ func Test_01(t *testing.T) {
 		t.Errorf("query: %s\n", qs)
 	}
 
+	// SELECT * From tests WHERE (ID BETWEEN 40 AND 55)
+	if qs = q.Where(query.Between("ID", 40, 55)).QueryString(); qs != `SELECT * FROM tests WHERE (ID BETWEEN 40 AND 55);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * From tests WHERE (ID IN (1,40,55))
+	if qs = q.Where(query.In("ID", []interface{}{1, 40, 55})).QueryString(); qs != `SELECT * FROM tests WHERE (ID IN(1,40,55));` {
+		t.Errorf("query: %s\n", qs)
+	}
+
 	// ToLiteralValue(1)
 	if literal := query.ToLiteralValue(1); literal != `1` {
 		t.Errorf("literal: %s\n", literal)
