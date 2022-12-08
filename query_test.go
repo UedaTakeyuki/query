@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/UedaTakeyuki/query"
+	qb "github.com/UedaTakeyuki/query"
 )
 
 var q query.Query
@@ -73,6 +74,16 @@ func Test_01(t *testing.T) {
 
 	// SELECT * From tests WHERE (ID IN (1,40,55))
 	if qs = q.Where(query.In("ID", []interface{}{1, 40, 55})).QueryString(); qs != `SELECT * FROM tests WHERE (ID IN(1,40,55));` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NULL)
+	if qs = q.Where(query.IsNull(qb.JsonFunction{Body: `json_extract(Sys, "$.logicallyDeleted")`})).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NULL);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL)
+	if qs = q.Where(query.IsNotNull(qb.JsonFunction{Body: `json_extract(Sys, "$.logicallyDeleted")`})).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL);` {
 		t.Errorf("query: %s\n", qs)
 	}
 

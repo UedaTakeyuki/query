@@ -71,3 +71,13 @@ func In(name string, vals []interface{}) string {
 	res = res + "))"
 	return res
 }
+
+// WHERE (c1 IS NULL) ;
+func IsNull(name interface{}) string {
+	return fmt.Sprintf(`(%s IS NULL)`, ToLiteralValue(name))
+}
+
+// WHERE (c1 IS NOT NULL) ;
+func IsNotNull(name interface{}) string {
+	return fmt.Sprintf(`(%s IS NOT NULL)`, ToLiteralValue(name))
+}
