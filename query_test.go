@@ -86,6 +86,9 @@ func Test_01(t *testing.T) {
 	if qs = q.Where(query.IsNotNull(qb.JsonFunction{Body: `json_extract(Sys, "$.logicallyDeleted")`})).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL);` {
 		t.Errorf("query: %s\n", qs)
 	}
+	if qs = q.Where(query.IsNotNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`))).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL);` {
+		t.Errorf("query: %s\n", qs)
+	}
 
 	// ToLiteralValue(1)
 	if literal := query.ToLiteralValue(1); literal != `1` {
@@ -151,4 +154,5 @@ func Test_01(t *testing.T) {
 		{Path: "$.expired", Value: true},
 	}
 	log.Println(q.Update(nil).SetJson_Set("attr", jsonParams).Where(query.Equal("ID", 1)).QueryString())
+
 }

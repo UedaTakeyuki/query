@@ -19,3 +19,5 @@
 2022.12.07 add NotEqual, GreaterThan, GreaterEqual, LessThan, LessEqual, And, Or, Not
            add Between, In
 2022.12.08 add IsNull, IsNotNull
+
+2022.12.27 NotQuoteString

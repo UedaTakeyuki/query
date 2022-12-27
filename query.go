@@ -25,6 +25,8 @@ type JsonFunction struct {
 	Body string
 }
 
+type NotQuoteString string
+
 const (
 	Select Verb = iota
 	ReplaceInto
@@ -78,6 +80,8 @@ func ToLiteralValue(val interface{}) string {
 		return fmt.Sprintf(`'%s'`, v)
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, v.Body)
+	case NotQuoteString:
+		return fmt.Sprintf(`%v`, v)
 	case map[string]interface{}, []map[string]interface{}:
 		attr, err := json.Marshal(v)
 		if err != nil {
