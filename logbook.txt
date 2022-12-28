@@ -21,3 +21,4 @@
 2022.12.08 add IsNull, IsNotNull
 
 2022.12.27 NotQuoteString
+2022.12.28 add str2db.go

@@ -27,6 +27,10 @@ type JsonFunction struct {
 
 type NotQuoteString string
 
+func (n *NotQuoteString) String() string {
+	return (string)(*n)
+}
+
 const (
 	Select Verb = iota
 	ReplaceInto
