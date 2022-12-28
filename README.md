@@ -166,6 +166,25 @@ func showQueries(detail map[string]interface{}){
 	
 }
 ```
+### STR2 macro
+```STR2xxx``` macro is expanded to appropriate stuff depending　on the DBMS with ```Str2SQLite()``` or ```Str2Mariadb()``` expansion function as follwos:
+
+#### STR2JSON_FUNC() macro
+This macro is expanded to a function that tells dbms to treat the argument string as json.
+```Str2SQLite()``` expand this as ```json()```.
+```Str2Mariadb()``` expand this as ```json_compact```.
+
+#### STR2PF macro
+This macro is expanded to the placeholder string of prepared statements on the DBMS.
+```Str2SQLite()``` expand this as ```?```.
+```Str2Mariadb()``` expand this as ```?```.
+Note that placeholder string happens to be the same for both SQLite and Mariadb, but will likely be replaced with a different string in the future when postgres and oracle are supported.
+
+#### STR2PF_PATH macro
+This macro is expanded to the placeholder string for the json_path.
+```Str2SQLite()``` expand this as ```'' || ?```.
+```Str2Mariadb()``` expand this as ```CONCAT('', ?)```.
+You may think why so complecated. For more detail, refer the [Sudip Raval](https://medium.com/@rsudip90)'s [blog](https://medium.com/aubergine-solutions/working-with-mysql-json-data-type-with-prepared-statements-using-it-in-go-and-resolving-the-15ef14974c48) and [his article of stackoverflow](https://stackoverflow.com/questions/41436245/how-to-use-a-prepared-statement-for-json-data-types-for-mysql-in-java)
 
 ### Expediently feature support
 Basically, supported features are selected to meet my necesity for my projects :-)  
