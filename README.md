@@ -180,7 +180,7 @@ This macro is expanded to the placeholder string of prepared statements on the D
 - ```Str2Mariadb()``` expand this as ```?```.  
 
 
-Note that placeholder string happens to be the same for both SQLite and Mariadb, but will likely be replaced with a different string in the future when postgres and oracle are supported.
+Note that placeholder string happens to be the same for both SQLite and Mariadb, but will likely be replaced with a different string in the future when postgres or oracle are supported as $ or :col.
 
 #### STR2PF_PATH macro
 This macro is expanded to the placeholder string for the json_path.
