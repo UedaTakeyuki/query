@@ -177,13 +177,16 @@ This macro is expanded to a function that tells dbms to treat the argument strin
 #### STR2PF macro
 This macro is expanded to the placeholder string of prepared statements on the DBMS.
 - ```Str2SQLite()``` expand this as ```?```.
-- ```Str2Mariadb()``` expand this as ```?```.
+- ```Str2Mariadb()``` expand this as ```?```.  
+
+
 Note that placeholder string happens to be the same for both SQLite and Mariadb, but will likely be replaced with a different string in the future when postgres and oracle are supported.
 
 #### STR2PF_PATH macro
 This macro is expanded to the placeholder string for the json_path.
 - ```Str2SQLite()``` expand this as ```'' || ?```.
-- ```Str2Mariadb()``` expand this as ```CONCAT('', ?)```.
+- ```Str2Mariadb()``` expand this as ```CONCAT('', ?)```.  
+
 You may think why so complecated. For more detail, refer the [Sudip Raval](https://medium.com/@rsudip90)'s [blog](https://medium.com/aubergine-solutions/working-with-mysql-json-data-type-with-prepared-statements-using-it-in-go-and-resolving-the-15ef14974c48) and [his article of stackoverflow](https://stackoverflow.com/questions/41436245/how-to-use-a-prepared-statement-for-json-data-types-for-mysql-in-java)
 
 ### Expediently feature support
