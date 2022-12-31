@@ -174,7 +174,7 @@ This macro is expanded to a function that tells dbms to treat the argument strin
 - ```Str2SQLite()``` expand this as ```json()```.
 - ```Str2Mariadb()``` expand this as ```json_compact```.
 
-#### STR2PF macro
+#### STR2PH macro
 This macro is expanded to the placeholder string of prepared statements on the DBMS.
 - ```Str2SQLite()``` expand this as ```?```.
 - ```Str2Mariadb()``` expand this as ```?```.  
@@ -182,7 +182,7 @@ This macro is expanded to the placeholder string of prepared statements on the D
 
 Note that placeholder string happens to be the same for both SQLite and Mariadb, but will likely be replaced with a different string in the future when postgres or oracle are supported as $ or :col.
 
-#### STR2PF_PATH macro
+#### STR2PH_PATH macro
 This macro is expanded to the placeholder string for the json_path.
 - ```Str2SQLite()``` expand this as ```'' || ?```.
 - ```Str2Mariadb()``` expand this as ```CONCAT('', ?)```.  

@@ -156,7 +156,7 @@ func Test_01(t *testing.T) {
 	log.Println(q.Update(nil).SetJson_Set("attr", jsonParams).Where(query.Equal("ID", 1)).QueryString())
 
 	jsonParams = []query.JsonPathAndValue{
-		{Path: qb.NotQuoteString("STR2PF_PATH"), Value: qb.NotQuoteString("?")},
+		{Path: qb.NotQuoteString("STR2PH_PATH"), Value: qb.NotQuoteString("?")},
 	}
 	preparedQueryString := q.Update(nil).SetJson_Set("attr", jsonParams).Where(query.Equal("ID", 1)).QueryString()
 	log.Println("raw", preparedQueryString)
