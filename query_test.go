@@ -23,7 +23,7 @@ func Test_01(t *testing.T) {
 	}
 
 	// SELECT * From tests WHERE ID = 1
-	if qs = q.Where(query.Equal("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID = 1;` {
+	if qs = q.Where(qb.Equal("ID", 1)).QueryString(); qs != `SELECT * FROM tests WHERE ID = 1;` {
 		t.Errorf("query: %s\n", qs)
 	}
 
@@ -86,7 +86,13 @@ func Test_01(t *testing.T) {
 	if qs = q.Where(query.IsNotNull(qb.JsonFunction{Body: `json_extract(Sys, "$.logicallyDeleted")`})).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL);` {
 		t.Errorf("query: %s\n", qs)
 	}
+
 	if qs = q.Where(query.IsNotNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`))).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Sys, "$.logicallyDeleted") IS NOT NULL);` {
+		t.Errorf("query: %s\n", qs)
+	}
+
+	// SELECT * FROM tests WHERE ((json_extract(Attr, jsonPath("$.tags") LIKE "tag" AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT %d OFFSET %d)
+	if qs = q.Where(qb.And(qb.Like(qb.NotQuoteString(`json_extract(Attr, jsonPath("$.tags"))`), "tag"), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Attr, jsonPath("$.tags")) LIKE 'tag' AND (json_extract(Sys, "$.logicallyDeleted") IS NULL));` {
 		t.Errorf("query: %s\n", qs)
 	}
 
