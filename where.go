@@ -25,7 +25,7 @@ func Equal(name string, val interface{}) string {
 }
 
 func Like(name interface{}, val interface{}) string {
-	return fmt.Sprintf(`%s LIKE %s`, ToLiteralValue(name), ToLiteralValue(val))
+	return fmt.Sprintf(`%s LIKE %s`, name, ToLiteralValue(val))
 }
 
 func NotEqual(name string, val interface{}) string {

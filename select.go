@@ -50,12 +50,12 @@ func (query_ptr *Query) QueryStringSelect() (query string) {
 	return
 }
 
-func (query_ptr *Query) Limit(expr string) *Query {
-	query_ptr.limit = "LIMIT " + expr
+func (query_ptr *Query) Limit(expr interface{}) *Query {
+	query_ptr.limit = "LIMIT " + ToLiteralValue(expr)
 	return query_ptr
 }
 
-func (query_ptr *Query) Offset(expr string) *Query {
-	query_ptr.offset = "OFFSET " + expr
+func (query_ptr *Query) Offset(expr interface{}) *Query {
+	query_ptr.offset = "OFFSET " + ToLiteralValue(expr)
 	return query_ptr
 }
