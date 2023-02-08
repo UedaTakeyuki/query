@@ -12,6 +12,8 @@ type Query struct {
 	tableName string
 	body      string
 	where     string
+	limit     string
+	offset    string
 	err_str   string
 	verb      Verb
 }

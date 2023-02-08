@@ -92,7 +92,7 @@ func Test_01(t *testing.T) {
 	}
 
 	// SELECT * FROM tests WHERE ((json_extract(Attr, jsonPath("$.tags") LIKE "tag" AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT %d OFFSET %d)
-	if qs = q.Where(qb.And(qb.Like(qb.NotQuoteString(`json_extract(Attr, jsonPath("$.tags"))`), "tag"), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Attr, jsonPath("$.tags")) LIKE 'tag' AND (json_extract(Sys, "$.logicallyDeleted") IS NULL));` {
+	if qs = q.Where(qb.And(qb.Like(qb.NotQuoteString(`json_extract(Attr, jsonPath("$.tags"))`), "tag"), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).Limit(qb.ToLiteralValue(10)).Offset(qb.ToLiteralValue(100)).QueryString(); qs != `SELECT * FROM tests WHERE (json_extract(Attr, jsonPath("$.tags")) LIKE 'tag' AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT 10 OFFSET 100;` {
 		t.Errorf("query: %s\n", qs)
 	}
 

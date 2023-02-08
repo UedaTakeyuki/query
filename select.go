@@ -39,6 +39,23 @@ func (query_ptr *Query) QueryStringSelect() (query string) {
 	if query_ptr.where != "" {
 		query += fmt.Sprintf(` %s`, query_ptr.where)
 	}
+	if query_ptr.limit != "" {
+		query += fmt.Sprintf(` %s`, query_ptr.limit)
+	}
+	if query_ptr.offset != "" {
+		query += fmt.Sprintf(` %s`, query_ptr.offset)
+	}
+
 	query += ";"
 	return
+}
+
+func (query_ptr *Query) Limit(expr string) *Query {
+	query_ptr.limit = "LIMIT " + expr
+	return query_ptr
+}
+
+func (query_ptr *Query) Offset(expr string) *Query {
+	query_ptr.offset = "OFFSET " + expr
+	return query_ptr
 }
