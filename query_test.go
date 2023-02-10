@@ -92,17 +92,17 @@ func Test_01(t *testing.T) {
 	}
 
 	{
-		a := `SELECT * FROM tests WHERE (json_extract(Attr, jsonPath("$.owner")) = 1 AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT 10 OFFSET 100;`
+		a := `SELECT * FROM tests WHERE (json_extract(Attr, "$.owner") = 1 AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT 10 OFFSET 100;`
 
-		if qs = q.Where(qb.And(qb.Equal(`json_extract(Attr, jsonPath("$.owner"))`, 1), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).Limit(10).Offset(100).QueryString(); qs != a {
+		if qs = q.Where(qb.And(qb.Equal(`json_extract(Attr, "$.owner")`, 1), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).Limit(10).Offset(100).QueryString(); qs != a {
 			t.Errorf("query: %s\n", qs)
 		}
 	}
 
 	{
-		a := `SELECT * FROM tests WHERE (json_extract(Attr, jsonPath("$.tags")) LIKE 'tag' AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT 10 OFFSET 100;`
+		a := `SELECT * FROM tests WHERE (json_extract(Attr, "$.tags") LIKE '%tag%' AND (json_extract(Sys, "$.logicallyDeleted") IS NULL)) LIMIT 10 OFFSET 100;`
 
-		if qs = q.Where(qb.And(qb.Like(`json_extract(Attr, jsonPath("$.tags"))`, "tag"), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).Limit(10).Offset(100).QueryString(); qs != a {
+		if qs = q.Where(qb.And(qb.Like(`json_extract(Attr, "$.tags")`, "%tag%"), qb.IsNull(qb.NotQuoteString(`json_extract(Sys, "$.logicallyDeleted")`)))).Limit(10).Offset(100).QueryString(); qs != a {
 			t.Errorf("query: %s\n", qs)
 		}
 	}
