@@ -33,6 +33,12 @@ func (n *NotQuoteString) String() string {
 	return (string)(*n)
 }
 
+type FunctionString string
+
+func (n *FunctionString) String() string {
+	return (string)(*n)
+}
+
 const (
 	Select Verb = iota
 	ReplaceInto
@@ -69,10 +75,10 @@ func (query_ptr *Query) QueryString() (query string) {
 }
 
 /*
-	Make literal-value from go variable
+Make literal-value from go variable
 
-	.(int)    val
-	.(string) "val"
+.(int)    val
+.(string) "val"
 */
 func ToLiteralValue(val interface{}) string {
 	switch v := val.(type) {
@@ -86,6 +92,8 @@ func ToLiteralValue(val interface{}) string {
 		return fmt.Sprintf(`'%s'`, v)
 	case JsonFunction:
 		return fmt.Sprintf(`%s`, v.Body)
+	case FunctionString:
+		return fmt.Sprintf(`%v`, v)
 	case NotQuoteString:
 		return fmt.Sprintf(`%v`, v)
 	case map[string]interface{}, []map[string]interface{}:

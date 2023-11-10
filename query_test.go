@@ -117,6 +117,21 @@ func Test_01(t *testing.T) {
 		t.Errorf("literal: %s\n", literal)
 	}
 
+	// ToLiteralValue('JsonFunction("name")')
+	if literal := query.ToLiteralValue(query.FunctionString("name")); literal != `name` {
+		t.Errorf("literal: %s\n", literal)
+	}
+
+	// ToLiteralValue('FunctionString("name")')
+	if literal := query.ToLiteralValue(query.JsonFunction{Body: "name"}); literal != `name` {
+		t.Errorf("literal: %s\n", literal)
+	}
+
+	// ToLiteralValue('NotQuoteString("name")')
+	if literal := query.ToLiteralValue(query.NotQuoteString("name")); literal != `name` {
+		t.Errorf("literal: %s\n", literal)
+	}
+
 	// Drop Table tests;
 	if qs = q.DropTable().QueryString(); qs != `DROP TABLE tests;` {
 		t.Errorf("query: %s\n", qs)

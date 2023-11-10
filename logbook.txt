@@ -25,3 +25,5 @@
 
 2023.02.07 add Like
 2023.02.08 add Limit, Offset
+
+2023.11.10 add FunctionString
